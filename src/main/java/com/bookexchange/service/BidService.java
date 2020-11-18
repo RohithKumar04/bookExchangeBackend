@@ -27,13 +27,13 @@ public class BidService{
 	
 	//////////////////////////// USER METHODS
 	
-	public Bidding addUserRequest(User user, int bookId) {
+	public Bidding addUserRequest(User user, int bookId, int bidAmount) {
 		Book currentBook = bookService.getBookById(bookId);
 		
 		Bidding bid = new Bidding();
 		bid.setBookId(currentBook);
 		bid.setUserId(user);
-		bid.setBidAmount(100);
+		bid.setBidAmount(bidAmount);
 		user.getUserBidList().add(bid);
 		
 		currentBook.setBid(bid);

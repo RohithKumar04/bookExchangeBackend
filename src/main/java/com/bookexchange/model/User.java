@@ -15,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class User {
 	
@@ -32,6 +34,7 @@ public class User {
 	private String phoneNumber;
 	
 	@OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("userId")
 	private Set<Bidding> userBidList = new HashSet<Bidding>() ;
 
 	public User() {

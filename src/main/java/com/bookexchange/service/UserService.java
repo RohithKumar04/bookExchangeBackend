@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,20 +41,19 @@ public class UserService {
 	public User addUser(String name, String email, String mobile) {
 		
 		User u1 = new User(name,email,mobile);
-		return userRepo.save(u1);
-				
+		return userRepo.save(u1);	
 	}
 	
 	public Response deleteUserById(int userId) {
 		userRepo.deleteById(userId);		
-		return new Response("User added Successfully");
+		return new Response("User deleted Successfully");
 		
 	}
 
-	public Response requestBook(int userId, Book bookDetails) {
+	public Response requestBook(int userId, Book bookDetails, int bidAmount) {
 		Book book = bookService.addBook(bookDetails.getName(),bookDetails.getCategory(),bookDetails.getAuthor(),bookDetails.getEdition());
 		User user = userRepo.findById(userId).get();
-		biddingService.addUserRequest(user, book.getId());
+		biddingService.addUserRequest(user, book.getId(), bidAmount);
 		
 		return new Response("Request Posted successfully!!");
 	}

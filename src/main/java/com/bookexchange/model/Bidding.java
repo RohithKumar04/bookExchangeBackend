@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class Bidding {
 	
@@ -19,14 +21,17 @@ public class Bidding {
 	
 	@ManyToOne
 	@JoinColumn(name = "userId")
+	@JsonIgnoreProperties("userBidList")
 	private User userId;
 	
 	@ManyToOne
 	@JoinColumn(name = "shopKeeperId")
+	@JsonIgnoreProperties("shopBidList")
 	private Shopkeeper shopKeeperId;
 	
 	@OneToOne
 	@JoinColumn(name = "bookId")
+	@JsonIgnoreProperties("bid")
 	private Book bookId;
 	
 	private int bidAmount;
@@ -36,8 +41,6 @@ public class Bidding {
 		super();
 	}
 
-	
-
 	public Bidding(User userId, Shopkeeper shopKeeperId, Book bookId, int bidAmount) {
 		super();
 		this.userId = userId;
@@ -45,8 +48,6 @@ public class Bidding {
 		this.bookId = bookId;
 		this.bidAmount = bidAmount;
 	}
-
-
 
 	public int getId() {
 		return id;
@@ -93,6 +94,4 @@ public class Bidding {
 		return "Bidding [id=" + id + ", userId=" + userId + ", shopKeeperId=" + shopKeeperId + ", BookId=" + bookId
 				+ ", bidAmount=" + bidAmount + "]";
 	}
-	
-
 }

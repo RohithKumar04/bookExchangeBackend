@@ -1,6 +1,8 @@
 package com.bookexchange.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bookexchange.model.Bidding;
 import com.bookexchange.model.Response;
 import com.bookexchange.model.Shopkeeper;
 import com.bookexchange.service.ShopkeeperService;
@@ -54,9 +58,13 @@ public class ShopkeeperController {
 		shopkeeperService.deleteShopkeeperById(shopkeeperId);
 	}
 	
-	@PutMapping("/{shopkeeperId}/bid")
-	public Response bidForBook(@PathVariable("shopkeeperId") int shopkeeperId) {
-		
-		return shopkeeperService.bidForBook(shopkeeperId, 1, 300 );
+	@PostMapping("/{shopkeeperId}/bid")
+	public Response bidForBook(@PathVariable("shopkeeperId") int shopkeeperId, @RequestBody Map<String, Object> bidDetails) {
+		return shopkeeperService.bidForBook(shopkeeperId, (Integer) bidDetails.get("bidId"), (Integer) bidDetails.get("bidAmount"));
+	}
+	
+	@GetMapping("/{shopkeeperId}/bidStatus")
+	public Set<Bidding> biddingStatus(@PathVariable("shopkeeperId") int shopkeeperId) {
+		return shopkeeperService.biddingStatus(shopkeeperId);
 	}
 }

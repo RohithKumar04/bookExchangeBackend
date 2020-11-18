@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class Book {
 	
@@ -31,6 +33,7 @@ public class Book {
 	private float edition;
 	
 	@OneToOne(mappedBy = "bookId")
+	@JsonIgnoreProperties("bookId")
 	private Bidding bid;
 	
 	public Book() {

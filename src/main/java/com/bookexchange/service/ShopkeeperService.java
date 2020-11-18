@@ -1,10 +1,12 @@
 package com.bookexchange.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bookexchange.model.Bidding;
 import com.bookexchange.model.Response;
 import com.bookexchange.model.Shopkeeper;
 import com.bookexchange.repo.ShopkeeperRepo;
@@ -44,6 +46,11 @@ public class ShopkeeperService {
 		// TODO Auto-generated method stub
 		Shopkeeper shop = shopkeeperRepo.findById(shopkeeperId).get();
 		return bidService.bidForBook(shop, bidId, bidPrice);
+	}
+
+	public Set<Bidding> biddingStatus(int shopkeeperId) {
+		Shopkeeper shop = shopkeeperRepo.findById(shopkeeperId).get();
+		return shop.getShopBidList();
 	}
 
 }

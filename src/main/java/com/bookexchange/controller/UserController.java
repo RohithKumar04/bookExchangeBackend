@@ -1,6 +1,7 @@
 package com.bookexchange.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookexchange.model.Bidding;
@@ -54,13 +56,14 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/{userId}")
-	public void deleteUser(@PathVariable("userId") int userId){
-		userService.deleteUserById(userId);
+	public Response deleteUser(@PathVariable("userId") int userId){
+		return userService.deleteUserById(userId);
 	}
 	
 	@PostMapping("/{userId}/request")
-	public Response requestBook(@PathVariable("userId") int userId, @RequestBody Book bookDetails) {
-		return userService.requestBook(userId, bookDetails);
+	public Response requestBook(@PathVariable("userId") int userId, @RequestBody Book bookDetails, @RequestParam("bidAmount") int bidAmount) {
+		System.out.println(bidAmount);
+		return userService.requestBook(userId, bookDetails, bidAmount);
 		
 	}
 	
